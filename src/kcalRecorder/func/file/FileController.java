@@ -20,15 +20,36 @@ public class FileController {
 		this.fileName = fileName;
 		this.filePath = filePath;
 	}
-	public boolean saveFile(ArrayList<Meal> list,ArrayList<Food> foodList,ArrayList<Foods> foodsList) {
+	public boolean saveMealListFile(ArrayList<Meal> mealList,String fileName) {
 		FileOutputStream fos = null;
 		ObjectOutputStream oos = null;
 		boolean check = true;
+		
 		try {
 			fos = new FileOutputStream(fileName);
 			oos = new ObjectOutputStream(fos);
-			oos.writeObject(list);
-			oos.writeObject(foodList);
+			oos.writeObject(mealList);
+		} catch (IOException e) {
+			e.printStackTrace();
+			check = !check;
+		}finally{
+			try {
+				oos.close();
+				fos.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return check;
+	}
+	public boolean saveFoodsListFile(ArrayList<Foods> foodsList, String fileName) {
+		FileOutputStream fos = null;
+		ObjectOutputStream oos = null;
+		boolean check = true;
+		
+		try {
+			fos = new FileOutputStream(fileName);
+			oos = new ObjectOutputStream(oos);
 			oos.writeObject(foodsList);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -40,12 +61,34 @@ public class FileController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
 		}
-		return true;
+		return check;
+	}
+	public boolean saveFoodListFile(ArrayList<Food> foodList,String fileName) {
+		FileOutputStream fos = null;
+		ObjectOutputStream oos = null;
+		boolean check = true;
+		
+		try {
+			fos = new FileOutputStream(fileName);
+			oos = new ObjectOutputStream(fos);
+			oos.writeObject(foodList);
+		}
+		catch (IOException e) {
+			check = !check;
+			e.printStackTrace();
+		} finally {
+			try {
+				oos.close();
+				fos.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return check;
 	}
 	@SuppressWarnings("unchecked")
-	public ArrayList<Meal> readMealList(){
+	public ArrayList<Meal> readMealList(String fileName){
 		ArrayList<Meal> list= null;
 		ArrayList<Foods> foodsList = null;
 		ArrayList<Food> foodList = null;
@@ -75,7 +118,7 @@ public class FileController {
 		return list;
 	}
 
-	public ArrayList<Food> readFoodList(){
+	public ArrayList<Food> readFoodList(String fileName){
 		ArrayList<Food> list= null;
 		FileInputStream fis = null;
 		ObjectInputStream ois = null;
@@ -101,7 +144,7 @@ public class FileController {
 		return list;
 	}
 
-	public ArrayList<Foods> readFoodsList(){
+	public ArrayList<Foods> readFoodsList(String fileName){
 		ArrayList<Foods> foodsList = null;
 		FileInputStream fis = null;
 		ObjectInputStream ois = null;

@@ -27,7 +27,7 @@ public class Dao {
 			u.setId(rset.getString("id"));
 			u.setPw(rset.getString("pw"));
 			u.setNickname(rset.getString("nickName"));
-			u.setNo(rset.getInt("u_code"));
+			u.setuNo(rset.getInt("u_code"));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -292,7 +292,7 @@ public class Controller {
 	public ActionListener actionListenerMenuFileSave() {
 		ActionListener actionListener = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (fileController.saveFile(mealList,foodList,foodsList)) {
+				if (saveListsToFiles()) {
 					JOptionPane.showMessageDialog(mainFrame, "저장되었습니다.");
 				} else {
 					JOptionPane.showMessageDialog(mainFrame, "저장 실패!");
@@ -301,14 +301,21 @@ public class Controller {
 		};
 		return actionListener;
 	}
+	private boolean saveListsToFiles() {
+		//TODO 이전에 저장된 데이터가 있으면 저장하고 만약 실패하면 그부분으로 돌아가는것 만들기
+		fileController.saveFoodListFile(foodList, "food.dat");
+		fileController.saveFoodsListFile(foodsList, "foods.dat");
+		fileController.saveMealListFile(mealList, "meal.dat");
+		
+	}
 	private boolean setArraymealListFoodFoodsFromFile() {
 		ArrayList<Food> foodList = null;
 		ArrayList<Foods> foodsList = null;
 		ArrayList<Meal> mealList = null;
 		
-		foodList = fileController.readFoodList();
-		foodsList = fileController.readFoodsList();
-		mealList = fileController.readMealList();
+		foodList = fileController.readFoodList("date1");
+		foodsList = fileController.readFoodsList("date2");
+		mealList = fileController.readMealList("date3");
 		if(foodList == null || foodsList == null || mealList == null) {
 			return false;
 		} else {
